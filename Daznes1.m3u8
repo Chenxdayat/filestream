@@ -1,0 +1,196 @@
+<div class="video-container">
+  <style>
+    body {
+        width:100%;
+        height: 100%;
+        font-family: Poppins;
+        display:block;
+        position: absolute;
+        padding: 0px;
+        margin: 0px;
+        background: #000;
+    }
+    player{
+        width:100%;
+        height: 100%;
+        display:inline-block;
+        -webkit-user-select:none;
+        -moz-user-select:none;
+        -ms-user-select:none;
+        user-select:none;
+    }
+ a, a:hover, a:focus, a:active {
+      text-decoration: none;
+ }
+
+</style>
+    <style>
+        div a img{visibility:hidden;}
+body::before {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        z-index: 10;
+        content: '';
+        height: 70px;
+        width: 110px;
+        background: url(' ') no-repeat;
+        background-size: 110px auto, auto;
+        opacity: 0.4;
+    }
+</style>
+  <style>
+/* Atur video agar full layar */
+.video-container {
+    position: fixed; /* Agar menempel pada layar */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999; /* Prioritas tampil */
+    background: black; /* Latar belakang hitam */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.video-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+  body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+</style>
+
+<div class='post-body entry-content float-container' id='post-body-8199520201108979689'>
+<div class='tgtPost' id='tgtPost'>
+
+ <style>.player {
+  position:fixed;bottom:0;right:0;top:0px;left:0;z-index:99999;
+  }</style>
+<div class="player" poster="#https://raw.githubusercontent.com/rimbatf/img/refs/heads/master/rimbatvrasio.jpg"src="https://otte.live.fly.ww.aiv-cdn.net/dub-nitro/live/dash/enc/bmnelo5c7a/out/v1/3ce2cdc4589f46189322bd3717c77957/cenc.mpd"></div>
+
+
+    <script src="https://cdn.jsdelivr.net/gh/clappr/clappr@latest/dist/clappr.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/clappr/dash-shaka-playback@latest/dist/dash-shaka-playback.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/level-selector@0.2.0/dist/level-selector.min.js" type="text/javascript"></script>
+
+	<script src="https://cdn.jsdelivr.net/clappr/latest/clappr.min.js" type="text/javascript"></script>
+
+	<script src="https://cdn.jsdelivr.net/clappr.level-selector/latest/level-selector.min.js" type="text/javascript"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/cdnbye@latest/dist/hlsjs-p2p-engine.min.js"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/cdnbye@latest/dist/clappr-plugin.min.js"></script>
+
+	<script src="js/dash.all.js"></script>
+
+	<script src="https://cdn.jsdelivr.net/gh/clappr/dash-shaka-playback@latest/dist/dash-shaka-playback.js"></script>
+  
+	<script src="https://cdn.jsdelivr.net/clappr/latest/clappr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/clappr/dash-shaka-playback@latest/dist/dash-shaka-playback.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/clappr-chromecast-plugin@latest/dist/clappr-chromecast-plugin.min.js"></script>
+
+    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/clappr/clappr-level-selector-plugin@latest/dist/level-selector.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+  
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  const players = document.querySelectorAll('.player')
+
+  let playingInstance = null
+
+  players.forEach(player => {
+
+    const clapprConfig = {
+
+      source: player.getAttribute("src"),
+
+      poster: player.getAttribute("poster"),
+
+      autoPlay: player.getAttribute("auto"),
+
+      //height: "100%",
+
+      plugins: [DashShakaPlayback, LevelSelector],
+
+       levelSelectorConfig: {
+
+    title: 'Quality',
+
+    labels: {
+
+        3: 'HD',// 700kbps
+
+        2: 'High', // 500kbps
+
+        1: 'Med', // 240kbps
+
+        0: 'Low', // 120kbps
+
+    },
+    labelCallback: function(playbackLevel, customLabel) {
+        return customLabel + playbackLevel.level.height+'p'; // High 720p
+    }
+  },
+		width: "100%",
+        height: "100%",
+      	aspectratio: "16:9",
+     	mute: false,
+      	autoPlay: true,
+       	watermark: 'https://bit.ly/3PJhGz7',
+            position: 'bottom-left',
+      shakaConfiguration: {
+                drm: {
+                clearKeys: {
+                       '44dd9cd370b08a868ead115fe84ecfde': 'bff19ab0a51cf14e848389b152913fd0',
+                }
+                }
+            },
+shakaOnBeforeLoad: function(shaka_player) {
+                // shaka_player.getNetworkingEngine().registerRequestFilter() ...
+
+            },
+    }
+    const clappr = new Clappr.Player(clapprConfig);
+
+    clappr.attachTo(player)
+
+    clappr.on(Clappr.Events.PLAYER_PLAY, function() {
+		})
+    var mediaOnPage = Array.prototype.slice.apply(document.querySelectorAll('audio, video'))
+
+mediaOnPage.forEach(function(mediumOnPage)
+  {
+    mediumOnPage.addEventListener('play', function(event)
+      {
+        mediaOnPage.forEach(function(mediumOnPage)
+          {
+            if (event.target != mediumOnPage)
+              {
+                mediumOnPage.pause();
+              }
+
+          })
+
+      })
+
+  })
+
+  });
+
+});
+</script>
+</div>
+ 
