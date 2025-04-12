@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>TV Streaming - DASH ClearKey</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.5.2/shaka-player.compiled.min.js"></script>
+  <style>
+    video { width: 100%; max-width: 800px; margin: auto; display: block; }
+  </style>
+</head>
+<body>
+  <h2 style="text-align: center;">Streaming DASH dengan ClearKey DRM</h2>
+  <video id="video" controls autoplay></video>
+
+  <script>
+    async function initPlayer() {
+      const manifestUri = 'https://otte.live.fly.ww.aiv-cdn.net/dub-nitro/live/dash/enc/bmnelo5c7a/out/v1/3ce2cdc4589f46189322bd3717c77957/cenc.mpd';
+      const clearKey = {
+        "keys": [{
+          "kty": "oct",
+          "kid": "44dd9cd370b08a868ead115fe84ecfde",
+          "k": "bff19ab0a51cf14e848389b152913fd0"
+        }],
+        "type": "temporary"
+      };
+
+      const video = document.getElementById('video');
+      const player = new shaka.Player(video);
+
+      player.configure({
+        drm: {
+          clearKeys: {
+            '44dd9cd370b08a868ead115fe84ecfde': 'bff19ab0a51cf14e848389b152913fd0'
+          }
+        }
+      });
+
+      try {
+        await player.load(manifestUri);
+        console.log('The video has now been loaded!');
+      } catch (e) {
+        console.error('Error loading video:', e);
+      }
+    }
+
+    shaka.polyfill.installAll();
+    if (shaka.Player.isBrowserSupported()) {
+      initPlayer();
+    } else {
+      alert('Browser tidak mendukung Shaka Player.');
+    }
+  </script>
+</body>
+</html>
