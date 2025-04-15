@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WSNS Live Player - DASH + ClearKey</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.5/shaka-player.compiled.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    video {
+      width: 90%;
+      max-width: 900px;
+      height: auto;
+      border: 2px solid #fff;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+  <video id="video" controls autoplay></video>
+
+  <script>
+    async function initApp() {
+      if (!shaka.Player.isBrowserSupported()) {
+        alert("Browser tidak mendukung Shaka Player!");
+        return;
+      }
+
+      const video = document.getElementById('video');
+      const player = new shaka.Player(video);
+
+      const manifestUri = 'https://live-oneapp-prd-news.akamaized.net/Content/CMAF_OL1-CTR-4s/Live/channel(WSNS)/master.mpd';
+
+      // ClearKey config
+      const keyId = '7d6bb9f86e133e4cb33440b493b6b672';
+      const key = '584ad285dcb9e7d42cf3e93f1cc3fe11';
+
+      player.configure({
+        drm: {
+          clearKeys: {
+            [keyId]: key
+          }
+        }
+      });
+
+      try {
+        await player.load(manifestUri);
+        console.log('Stream berhasil dimuat');
+      } catch (e) {
+        console.error('Error memuat stream:', e);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>
